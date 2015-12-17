@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+# Prints scripts to install packages, given file[path](s), including glob(s).
+
+source $(dirname "$0")/ipkgs.bash # validation, options, arguments, helpers
+items_init
+source $(dirname "$0")/ipkgs-vars.bash # expected below
+system=`uname -s`
+alias errcho='>&2 echo'
+
+# for each file path...
+for path in "${items[@]}"; do
+  id=$(basename "$path") # NOTE: maybe rename to $file to avoid ambiguity
+  # it seems like * glob-expands in a sed regexp a set -f prevents that
+  pm=$(set -f && echo $id | sed s/-.*//) # package manager default
+  [[ ${special[$id]+_} ]] && pm=${special[$id]}
+
+  # NOTE: if you swap $pm and $cmd the naming would become clearer
+  cmd=$(echo $pm | awk '{print $1;}') # so far due to brew cask
+
+  # make sure the filename / $id passes syscheck - if in whitelist
+  [[ ${syscheck[$id]+_} && $system != ${syscheck[$id]} ]] && {
+    errcho
+    errcho "Skipping \`$id\` - not for this '$system' OS, see syscheck rules."
+    continue
+  }
+
+  # check the $cmd is installed
+  hash $cmd 2>/dev/null || {
+    errcho
+    errcho "Skipping \`$cmd\` - not in \$PATH."
+    continue
+  }
+
+  # output depends on the data option
+  if [ -n "$data" ]; then
+    # data means csv (pm, pkg) - NOTE the "brew cask" $pm special case
+    sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo "$pm,"
+  else
+    command="$pm install"
+    [[ ${install[$pm]+_} ]] && command=${install[$pm]}
+
+    echo
+    echo "# Installing '$id' packages with \`$command\`..."
+
+    # obtain the package names to install one at a time (produces a script)
+    sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo $command
+  fi
+done
