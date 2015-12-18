@@ -5,7 +5,7 @@ LIBDIR ?= $(PREFIX)/lib/indirect
 
 install:
 	mkdir -p $(LIBDIR)
-	cp indirect* README.md $(LIBDIR)
+	cp indirect* README.md package.json $(LIBDIR)
 	ln -fs $(LIBDIR)/indirect $(BINDIR)/$(BIN)
 
 uninstall:
