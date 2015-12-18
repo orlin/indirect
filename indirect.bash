@@ -1,5 +1,9 @@
 # Sourced by `indirect`, this provides helpers.
 
+options=()
+arguments=() # these will become proper $items after items_init is called
+declare data # option to keep in mind for later use
+items=() # NOTE: make it an associative array keyed by $item, to preserve state?
 errcho() { >&2 echo "$1"; }
 
 # verify it's bash version >= 4
@@ -13,11 +17,6 @@ fi
 usage() {
   echo "Usage: $(basename $0) [-d] [-p] file(s)"
 }
-
-options=()
-arguments=() # these will become proper $items after items_init is called
-items=() # NOTE: make it an associative array keyed by $item, to preserve state?
-declare data # option to keep in mind for later use
 
 for arg in "$@"; do
   if [ "${arg:0:1}" = "-" ]; then
@@ -68,8 +67,8 @@ items_init() {
     where='' # no need to adjust location
   else
     # less typing - uses env var or the relative default
-    where="${INDIRECT_PATH:-$(realpath "$(realpath "$0" | xargs dirname)/install/packages")}/"
-    [[ -n "$data" ]] || echo "# Using \$INDIRECT_PATH = '$where'."
+    where="${INDIRECT_PACKAGES:-$(realpath "$(realpath "$0" | xargs dirname)/packages")}/"
+    [[ -n "$data" ]] || echo "# Using \$INDIRECT_PACKAGES = '$where'."
   fi
 
   # do glob expansion with correct paths
