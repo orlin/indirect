@@ -29,7 +29,7 @@ for path in "${items[@]}"; do
   # check the $cmd is installed
   hash $cmd 2>/dev/null || {
     errcho
-    errcho "Skipping \`$cmd\` - not in \$PATH."
+    errcho "Skipping '$id' because \`$cmd\` not in \$PATH."
     continue
   }
 

@@ -68,8 +68,8 @@ items_init() {
     where='' # no need to adjust location
   else
     # less typing - uses env var or the relative default
-    where="${INDIRECT_PATH:-$(realpath "$(realpath "$0" | xargs dirname)/install/packages")}/"
-    [[ -n "$data" ]] || echo "# Using \$INDIRECT_PATH = '$where'."
+    where="${INDIRECT_PACKAGES:-$(realpath "$(realpath "$0" | xargs dirname)/packages")}/"
+    [[ -n "$data" ]] || echo "# Using \$INDIRECT_PACKAGES = '$where'."
   fi
 
   # do glob expansion with correct paths
