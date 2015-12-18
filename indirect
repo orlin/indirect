@@ -2,9 +2,10 @@
 
 # Prints scripts to install packages, given file[path](s), including glob(s).
 
-source $(dirname "$0")/ipkgs.bash # validation, options, arguments, helpers
+somewhere=$(realpath "$0" | xargs dirname) # it could be a symlink
+source ${somewhere}/indirect.bash # validation, options, arguments, helpers
 items_init
-source $(dirname "$0")/ipkgs-vars.bash # expected below
+source ${somewhere}/indirect-vars.bash # expected below
 system=`uname -s`
 alias errcho='>&2 echo'
 
@@ -35,7 +36,7 @@ for path in "${items[@]}"; do
   # output depends on the data option
   if [ -n "$data" ]; then
     # data means csv (pm, pkg) - NOTE the "brew cask" $pm special case
-    sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo "$pm,"
+    sed -f ${somewhere}/indirect-keys.sed $path | xargs -n 1 echo "$pm,"
   else
     command="$pm install"
     [[ ${install[$pm]+_} ]] && command=${install[$pm]}
@@ -44,6 +45,6 @@ for path in "${items[@]}"; do
     echo "# Installing '$id' packages with \`$command\`..."
 
     # obtain the package names to install one at a time (produces a script)
-    sed -f $(dirname "$0")/ipkgs-keys.sed $path | xargs -n 1 echo $command
+    sed -f ${somewhere}/indirect-keys.sed $path | xargs -n 1 echo $command
   fi
 done

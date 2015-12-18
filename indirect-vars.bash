@@ -1,4 +1,4 @@
-# Sourced by `ipkgs`, this sets up the expected variables.
+# Sourced by `indirect`, this sets up the expected variables.
 
 # some commands can only run on certain operating systems
 # these are confirmed by filename

@@ -1,9 +1,9 @@
-# Sourced by `ipkgs`, this provides helpers.
+# Sourced by `indirect`, this provides helpers.
 
 alias errcho='>&2 echo'
 
 # verify it's bash version >= 4
-# for associative arrays, in use by ipkgs
+# for associative arrays, used by indirect
 if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
   errcho "Bash must be version 4 or greater."
   errcho "Currently it's: '${BASH_VERSION}'."
@@ -68,8 +68,8 @@ items_init() {
     where='' # no need to adjust location
   else
     # less typing - uses env var or the relative default
-    where="${IPKGS_PATH:-$(realpath "$(dirname $0)/../install/packages")}/"
-    [[ -n "$data" ]] || echo "# Using \$IPKGS_PATH = '$where'."
+    where="${INDIRECT_PATH:-$(realpath "$(dirname $0)/../install/packages")}/"
+    [[ -n "$data" ]] || echo "# Using \$INDIRECT_PATH = '$where'."
   fi
 
   # do glob expansion with correct paths

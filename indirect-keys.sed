@@ -1,4 +1,4 @@
-# Used by `ipkgs` to parse package lists.
+# Used by `indirect` to parse package lists.
 
 # no empty lines
 /^[:space:]*$/d
