@@ -1,6 +1,6 @@
 # Sourced by `indirect`, this provides helpers.
 
-alias errcho='>&2 echo'
+errcho() { >&2 echo "$1"; }
 
 # verify it's bash version >= 4
 # for associative arrays, used by indirect
