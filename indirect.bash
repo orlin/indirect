@@ -68,7 +68,7 @@ items_init() {
     where='' # no need to adjust location
   else
     # less typing - uses env var or the relative default
-    where="${INDIRECT_PATH:-$(realpath "$(dirname $0)/../install/packages")}/"
+    where="${INDIRECT_PATH:-$(realpath "$(dirname $0)/install/packages")}/"
     [[ -n "$data" ]] || echo "# Using \$INDIRECT_PATH = '$where'."
   fi
 
