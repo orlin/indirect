@@ -1,7 +1,7 @@
 {
   "name": "indirect",
   "version": "0.0.1",
-  "description": "indirect package management through lists",
+  "description": "Indirect package management through lists",
   "global": true,
   "install": "make install",
   "repository": {
