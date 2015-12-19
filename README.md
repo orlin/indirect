@@ -18,6 +18,8 @@ By default, it produces install scripts. Installing is my main motivation.
 
 ## Install
 
+A `Makefile` installs `indirect` to `/usr/local`, which is configurable...
+
 From source, using `git` and `make`:
 
 ```sh
