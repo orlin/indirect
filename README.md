@@ -1,6 +1,6 @@
 # indirect
 
-Helps with managing package manager package lists for easier installs, etc.
+*managing package manager package lists, for easier installs*
 
 ## What it does
 
@@ -12,7 +12,7 @@ Transforms the data into csv format, a step towards improved handling with [dati
 
 Pretty much every platform or programming language has a package manager.
 I got tired of forgetting what packages I use, why, and how they install.
-So I started making lists [such as these ](https://github.com/orlin/dots/tree/master/install/packages).
+So I started making lists [such as these](https://github.com/orlin/dots/tree/master/install/packages).
 This tool parses the text files and generates data for further scripting.
 By default, it produces install scripts. Installing is my main motivation.
 
