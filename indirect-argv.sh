@@ -4,15 +4,6 @@ options=()
 arguments=() # these will become proper $items after items_init is called
 declare data # option to keep in mind for later use
 items=() # NOTE: make it an associative array keyed by $item, to preserve state?
-errcho() { >&2 echo "$1"; }
-
-# verify it's bash version >= 4
-# for associative arrays, used by indirect
-if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
-  errcho "Bash must be version 4 or greater."
-  errcho "Currently it's: '${BASH_VERSION}'."
-  exit 1
-fi
 
 usage() {
   echo "Usage: $(basename $0) [-d] [-p] file(s)"

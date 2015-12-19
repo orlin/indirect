@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 
 # Prints scripts to install packages, given file[path](s), including glob(s).
-# Otherwise, it can also produce csv of: command, package.
+# It can also (i.e. instead) produce CSV of: manager, package.
+
+errcho() { >&2 echo "$1"; }
+
+# verify it's bash version >= 4
+# for associative arrays, used further down
+if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
+  errcho "Bash must be version 4 or greater."
+  errcho "Currently it's: '${BASH_VERSION}'."
+  exit 1
+fi
 
 function indirect() {
   somewhere=$(realpath "$0" | xargs dirname) # it could be a symlink
-  source ${somewhere}/indirect.bash # validation, options, arguments, helpers
+  source ${somewhere}/indirect-argv.sh # options, arguments, helpers
   items_init
-  source ${somewhere}/indirect-vars.bash # expected below
+  source ${somewhere}/indirect-vars.sh # expected below
   system=`uname -s`
-  errcho() { >&2 echo "$1"; }
 
   # for each file path...
   for path in "${items[@]}"; do
