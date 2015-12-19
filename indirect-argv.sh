@@ -9,6 +9,23 @@ usage() {
   echo "Usage: $(basename $0) [-d] [-p] file(s)"
 }
 
+help() {
+  echo
+  usage
+  echo
+  echo "  <file(s)> can be globs / paths:"
+  echo "  relative to a configured \$INDIRECT_PACKAGES location or"
+  echo "  a packages symbolic link in your installation directory."
+  echo "  Or else, one can use any paths with the --path option..."
+  echo
+  echo "  -d, --data     Get CSV data rather than installation scripts"
+  echo "  -p, --path     Provide real paths, skip convenient shortcuts"
+  echo "  -h, --help     Display this help"
+  echo
+  echo "  For more information, see https://github.com/orlin/indirect"
+  echo
+}
+
 for arg in "$@"; do
   if [ "${arg:0:1}" = "-" ]; then
     if [ "${arg:1:1}" = "-" ]; then
@@ -26,15 +43,14 @@ for arg in "$@"; do
   fi
 done
 
-if [ "${#arguments[@]}" -eq 0 ]; then
-  usage >&2
-  exit 1
-fi
-
 unset data paths
 
 for option in "${options[@]}"; do
   case "$option" in
+  "h" | "help" )
+    help
+    exit 0
+    ;;
   "p" | "paths" )
     paths="1"
     ;;
@@ -47,6 +63,11 @@ for option in "${options[@]}"; do
     ;;
   esac
 done
+
+if [ "${#arguments[@]}" -eq 0 ]; then
+  usage >&2
+  exit 1
+fi
 
 items_init() {
   # uses $paths (an option) and $arguments in order to initialize $items
