@@ -1,17 +1,12 @@
 # Sourced by `indirect`, this provides helpers.
 
-options=()
-arguments=() # these will become proper $items after items_init is called
-declare data # option to keep in mind for later use
-items=() # NOTE: make it an associative array keyed by $item, to preserve state?
-
-usage() {
+indirect_usage() {
   echo "Usage: $(basename $0) [-d] [-p] file(s)"
 }
 
-help() {
+indirect_help() {
   echo
-  usage
+  indirect_usage
   echo
   echo "  <file(s)> can be globs / paths:"
   echo "  relative to a configured \$INDIRECT_PACKAGES location or"
@@ -26,51 +21,54 @@ help() {
   echo
 }
 
-for arg in "$@"; do
-  if [ "${arg:0:1}" = "-" ]; then
-    if [ "${arg:1:1}" = "-" ]; then
-      options[${#options[*]}]="${arg:2}"
+indirect_items() {
+  # NOTE: counts on `items=()` in an outer scope
+  options=()
+  arguments=() # these will become proper $items
+
+  for arg in "$@"; do
+    if [ "${arg:0:1}" = "-" ]; then
+      if [ "${arg:1:1}" = "-" ]; then
+        options[${#options[*]}]="${arg:2}"
+      else
+        index=1
+        while option="${arg:$index:1}"; do
+          [ -n "$option" ] || break
+          options[${#options[*]}]="$option"
+          let index+=1
+        done
+      fi
     else
-      index=1
-      while option="${arg:$index:1}"; do
-        [ -n "$option" ] || break
-        options[${#options[*]}]="$option"
-        let index+=1
-      done
+      arguments[${#arguments[*]}]="$arg"
     fi
-  else
-    arguments[${#arguments[*]}]="$arg"
-  fi
-done
+  done
 
-unset data paths
+  # the options below could be declared / used from an outer scope
+  unset data paths
 
-for option in "${options[@]}"; do
-  case "$option" in
-  "h" | "help" )
-    help
-    exit 0
-    ;;
-  "p" | "paths" )
-    paths="1"
-    ;;
-  "d" | "data" )
-    data="1"
-    ;;
-  * )
-    usage >&2
+  for option in "${options[@]}"; do
+    case "$option" in
+    "h" | "help" )
+      indirect_help
+      exit 0
+      ;;
+    "p" | "paths" )
+      paths="1"
+      ;;
+    "d" | "data" )
+      data="1"
+      ;;
+    * )
+      indirect_usage >&2
+      exit 1
+      ;;
+    esac
+  done
+
+  if [ "${#arguments[@]}" -eq 0 ]; then
+    indirect_usage >&2
     exit 1
-    ;;
-  esac
-done
-
-if [ "${#arguments[@]}" -eq 0 ]; then
-  usage >&2
-  exit 1
-fi
-
-items_init() {
-  # uses $paths (an option) and $arguments in order to initialize $items
+  fi
 
   declare where # a path prefix
   if [ -n "$paths" ]; then

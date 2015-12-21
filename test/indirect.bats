@@ -1,6 +1,7 @@
 load $(which batshit-helpers)
 
-# . indirect
+INDIRECT_PATH=$(pwd)
+source indirect.sh
 
 @test "no args" {
   run indirect

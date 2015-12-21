@@ -13,12 +13,15 @@ if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
   exit 1
 fi
 
+somewhere=${INDIRECT_PATH:=$(realpath "$0" | xargs dirname)} # it could be a symlink
+source ${somewhere}/indirect-argv.sh # options and $items via indirect_items function
+source ${somewhere}/indirect-vars.sh # expected below
+system=`uname -s`
+
 function indirect() {
-  somewhere=$(realpath "$0" | xargs dirname) # it could be a symlink
-  source ${somewhere}/indirect-argv.sh # options, arguments, helpers
-  items_init
-  source ${somewhere}/indirect-vars.sh # expected below
-  system=`uname -s`
+  declare data # option to keep in mind for later use
+  items=() # NOTE: make it an associative array keyed by $item, to preserve state?
+  indirect_items "${@}"  # sets $items and any matching option vars declared above
 
   # for each file path...
   for path in "${items[@]}"; do
