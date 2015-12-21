@@ -41,6 +41,23 @@ bpkg install -g orlin/indirect
 indirect --help
 ```
 
+Last I tried, says:
+
+```text
+Usage: indirect [-d] [-p] file(s)
+
+  <file(s)> can be globs / paths:
+  relative to a configured $INDIRECT_PACKAGES location or
+  a packages symbolic link in your installation directory.
+  Or else, one can use any paths with the --path option...
+
+  -d, --data     Get CSV data rather than installation scripts
+  -p, --path     Provide real paths, skip convenient shortcuts
+  -h, --help     Display this help
+
+  For more information, see https://github.com/orlin/indirect
+```
+
 ### Configuration
 
 * `$INDIRECT_PACKAGES` by default your package lists are expected to be relative to this env variable path or to a `packages` directory symlinked into `indirect.sh`'s directory, there is an option to use direct paths though
