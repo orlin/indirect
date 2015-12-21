@@ -46,6 +46,15 @@ indirect --help
 * `$INDIRECT_PACKAGES` by default your package lists are expected to be relative to this env variable path or to a `packages` directory symlinked into `indirect.sh`'s directory, there is an option to use direct paths though
 * `$INDIRECT_HOME` it's possible to set your `indirect.sh`'s directory - which was added for testing purposes, and should not be needed otherwise
 
+## Test
+
+Testing needs npm, i.e. node.js installed.
+
+```sh
+npm i -g batshit #once
+npm test
+```
+
 ## License
 
 [MIT](http://orlin.mit-license.org)
