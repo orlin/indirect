@@ -5,6 +5,7 @@ branches:
     - active
     - master
 install:
+  - npm i
   - npm i -g batshit
 notifications:
   email:
