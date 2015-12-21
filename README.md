@@ -32,7 +32,7 @@ Or, with [bpkg](http://www.bpkg.io):
 
 ```sh
 curl -sLo- http://get.bpkg.io | bash # in case you don't already have it
-bpkg install orlin/indirect
+bpkg install -g orlin/indirect
 ```
 
 ## Use

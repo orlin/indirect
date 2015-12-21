@@ -2,7 +2,7 @@
   "name": "indirect",
   "version": "0.0.1",
   "description": "Indirect package management through lists",
-  "global": true,
+  "global": false,
   "install": "make install",
   "repository": {
     "type": "git",
