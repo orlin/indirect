@@ -8,3 +8,9 @@ source indirect.sh
   assert_output_contains "Usage: "
   assert_failure
 }
+
+@test "use of ./packages" {
+  run indirect npm
+  assert_output_contains "Installing 'npm' packages"
+  assert_success
+}
