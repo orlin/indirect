@@ -4,6 +4,8 @@
   "description": "Indirect package management through lists",
   "global": false,
   "install": "make install",
+  "devDependencies": { "batshit": "*" },
+  "scripts": { "test": "batshit -t test" },
   "repository": {
     "type": "git",
     "url": "https://github.com/orlin/indirect.git"
