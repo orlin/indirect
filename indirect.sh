@@ -13,10 +13,10 @@ if [ ${BASH_VERSION%%[^0-9]*} -lt 4 ]; then
   exit 1
 fi
 
-somewhere=${INDIRECT_PATH:=$(realpath "$0" | xargs dirname)} # it could be a symlink
+somewhere=${INDIRECT_HOME:=$(realpath "$0" | xargs dirname)} # it could be a symlink
 source ${somewhere}/indirect-argv.sh # options and $items via indirect_items function
 source ${somewhere}/indirect-vars.sh # expected below
-system=`uname -s`
+system_kind=`uname -s`
 
 function indirect() {
   declare data # option to keep in mind for later use
@@ -34,9 +34,9 @@ function indirect() {
     cmd=$(echo $pm | awk '{print $1;}') # so far due to brew cask
 
     # make sure the filename / $id passes syscheck - if in whitelist
-    [[ ${syscheck[$id]+_} && $system != ${syscheck[$id]} ]] && {
+    [[ ${syscheck[$id]+_} && $system_kind != ${syscheck[$id]} ]] && {
       errcho
-      errcho "Skipping \`$id\` - not for this '$system' OS, see syscheck rules."
+      errcho "Skipping \`$id\` - not for this '$system_kind' OS, see syscheck rules."
       continue
     }
 

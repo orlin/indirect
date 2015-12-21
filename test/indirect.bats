@@ -1,6 +1,6 @@
 load $(which batshit-helpers)
 
-INDIRECT_PATH=$(pwd)
+INDIRECT_HOME=$(pwd)
 source indirect.sh
 
 @test "no args" {
