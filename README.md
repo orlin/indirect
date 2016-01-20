@@ -1,4 +1,4 @@
-# indirect
+# indirect [![build status](https://img.shields.io/travis/orlin/indirect.svg?style=flat-square)](http://travis-ci.org/orlin/indirect)
 
 *managing package manager package lists, for easier installs*
 
